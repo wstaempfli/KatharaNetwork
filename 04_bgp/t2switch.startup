@@ -1,0 +1,13 @@
+#!/bin/bash
+
+ip address add 10.0.2.2/30 dev eth0	# to t1att
+ip address add 10.0.4.2/30 dev eth1	# to t2swisscom
+ip address add 10.0.6.1/30 dev eth2	# to t3uzh
+ip address add 10.0.7.1/30 dev eth3	# to t3eth
+
+# append the ruleset to the config file
+cat /shared/ruleset.conf >> /etc/frr/frr.conf
+
+systemctl start frr
+
+sleep 5 && vtysh -c "show ip bgp"

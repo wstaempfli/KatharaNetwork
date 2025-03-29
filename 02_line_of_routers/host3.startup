@@ -1,0 +1,8 @@
+#!/bin/bash
+## TODO-01: Configure the interface
+# ip address ...
+
+## TODO-03: Add static route to reach router1 via router2
+# ip route ...
+
+## TODO-EXTRA: Start a webserver

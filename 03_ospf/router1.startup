@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## TODO-01: set the interface IPs accordingly 
+# ip address ...
+# ip address ...
+
+## TODO-02: start the FRRouting deamon

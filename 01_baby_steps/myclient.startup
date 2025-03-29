@@ -1,0 +1,4 @@
+#!/bin/bash
+
+## TODO-02: configure the network interface with the correct IP address
+# ip address ...

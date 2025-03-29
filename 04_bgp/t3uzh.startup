@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ip address add 10.0.6.2/30 dev eth0		# to t2switch
+ip address add 10.0.102.1/24 dev eth1	# local network of t3zkb
+
+# append the ruleset to the config file
+cat /shared/ruleset.conf >> /etc/frr/frr.conf
+
+systemctl start frr
+
+sleep 5 && vtysh -c "show ip bgp"

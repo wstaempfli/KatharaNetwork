@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## TODO-02: configure the network interface with the correct IP address
+# ip address ...
+
+## TODO-03: Start your webserver
+# python3 ...
