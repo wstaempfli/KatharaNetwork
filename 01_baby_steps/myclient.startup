@@ -1,4 +1,4 @@
 #!/bin/bash
 
-## TODO-02: configure the network interface with the correct IP address
-# ip address ...
+# TODO-02: configure the network interface with the correct IP address
+ip addr add 10.0.12.1/24 dev eth0
