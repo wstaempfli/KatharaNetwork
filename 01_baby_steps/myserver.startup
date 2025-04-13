@@ -4,4 +4,4 @@
 ip addr add 10.0.12.2/24 dev eth0
 
 ## TODO-03: Start your webserver
-# python3 ...
+python3 server.py 8000
