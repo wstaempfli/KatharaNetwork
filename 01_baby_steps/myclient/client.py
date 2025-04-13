@@ -19,10 +19,9 @@ def main():
         # Send an HTTP GET request
         request = (
             f"GET / HTTP/1.1\r\n"
-            f"Host: {ip}:{port}\r\n"
-            f"Connection: close\r\n\r\n"
+            f"Host: {ip}:{port}\r\n\r\n"
         )
-        sock.send(request.encode())
+        sock.sendall(request.encode())
 
         # Receive and parse the response
         response = b""
