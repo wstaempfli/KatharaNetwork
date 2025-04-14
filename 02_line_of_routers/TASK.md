@@ -7,15 +7,15 @@ This is how it should look like:
 
  - **T1:** Assign IP addresses to each host's interface(s) according to the network diagram using their respective startup scripts.
  - **Q1:** What does the routing table look like on each router immediately after this initial IP configuration? Who can reach whom initially?
- - **A1:** \<WRITE YOUR ANSWER HERE\>
+ - **A1:** host1 and host2 can communicate and host2 and host3 can communicate but not host1 and host3 (verified via pinging)
  - **Q2:** What does a route actually contain as a "destination"? Is it an end host, a subnet, or something else?
- - **A2:** \<WRITE YOUR ANSWER HERE\>
+ - **A2:** It typically contains a subnet. This represents a range of potential end host IP addresses. Routing decisions are made based on which network the final end host belongs to.
  - **T2:** Add a static route on host1 to the network containing host3's IP address.
  - **Q3:** Try to `ping` host3's IP address from host 1. Why does it work (or not)?
- - **A3:** \<WRITE YOUR ANSWER HERE\>
+ - **A3:** after pinging I reveived: "13 packets transmitted, 0 received, 100% packet loss, time 12280ms" thus the packets are sent but host1 never receives the ICMP echo it requested. This is because we never added a route back to host1 in the routing table of host3
  - **T3:** Add anoter static route, this time on host3, to reach host1.
  - **Q4:** Can you `ping` host3 now?
- - **A4:** \<WRITE YOUR ANSWER HERE\>
+ - **A4:** yes it works. 
 
 There is one more step to turn a Linux host into a router, but we already did that for you: enable packet forwarding. By default, packet forwarding is disabled on many Linux hosts, meaning they only accept IP packets with a destination IP associated with the host itself. If packet forwarding is disabled, you can enable it using `sysctl -w net.ipv4.ip_forward=1` (might require elevated permissions).
 

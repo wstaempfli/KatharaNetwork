@@ -1,8 +1,12 @@
 #!/bin/bash
 ## TODO-01: Configure the interface
 # ip address ...
-
+ip addr add 10.0.23.3/24 dev eth0
 ## TODO-03: Add static route to reach router1 via router2
 # ip route ...
-
+# Route Definition:
+# Destination Network: 10.0.12.1/24 (The network host1 is on)
+# Next Hop (Gateway): 10.0.23.2 (host2's IP address on the network shared with host1)
+# Outgoing Interface: eth0 (The interface host1 uses to reach the next hop)
+ip route add 10.0.12.0/24 via 10.0.23.2 dev eth0
 ## TODO-EXTRA: Start a webserver
