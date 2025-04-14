@@ -1,7 +1,8 @@
 #!/bin/bash
 
 ## TODO-01: set the interface IPs accordingly 
-# ip address ...
-# ip address ...
+ip address add 10.0.12.1/24 dev eth0
+ip address add 10.0.13.1/24 dev eth1
 
 ## TODO-02: start the FRRouting deamon
+service frr start
