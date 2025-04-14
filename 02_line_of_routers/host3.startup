@@ -10,3 +10,9 @@ ip addr add 10.0.23.3/24 dev eth0
 # Outgoing Interface: eth0 (The interface host1 uses to reach the next hop)
 ip route add 10.0.12.0/24 via 10.0.23.2 dev eth0
 ## TODO-EXTRA: Start a webserver
+# Change into the directory where index.html is located
+cd /var/www/html
+# Start Python's simple HTTP server on port 80 in the background
+python3 -m http.server 80 &
+
+# Alternative using busybox h
