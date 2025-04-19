@@ -13,13 +13,13 @@ Each AS has a dedicated FRR configuration file `<AS-Name>/etc/frr/frr.conf` whic
 You are tasked to implement appropriate selection and export policies for each AS according to the above description and what you learned in the lectures. To that end, you have to define FRR route-maps and assign them each AS individually. Defining individual selection and export policies for 8 ASes may seem tedious at first, but by structuring your route-maps well you can greatly reduce your effort.
 
  - **Q1:** A host in UZH (t3uzh) wants to check its balance using the ZKB e-banking hosted in t3zkb. Which route does the traffic take before implementing any policy? Provide the AS-level path in the form `t3uzh-AS2-AS3-...-t3zkb` without any justification.
- - **A1:** \<WRITE YOUR ANSWER HERE\>
+ - **A1:** `t3uzh-AS2000-AS200-AS10-AS300-AS4000-t3zkb`
  - **Q2:** Which route does the traffic take if you only implemented the selection policy but no export policy? Provide the AS-level path in the form `t3uzh-AS2-AS3-...-t3zkb` without any justification.
- - **A2:** \<WRITE YOUR ANSWER HERE\>
+ - **A2:** `t3uzh-AS2000-AS200-AS3000-AS300-AS4000-t3zkb`
  - **Q3:** Which route does the traffic take after you implement both selection and export policy? Provide the AS-level path in the form `t3uzh-AS2-AS3-...-t3zkb` without any justification.
- - **A3:** \<WRITE YOUR ANSWER HERE\>
+ - **A3:** `t3uzh-AS2000-AS200-AS10-AS300-AS4000-t3zkb`
  - **Q4:** Why do we not need to specify the source IP for pinging an ASto which we are directly connected? For example, `t2swisscom` *can* ping `10.0.101.1` without specifying a source IP. Provide a brief answer in at most 2 sentences.
- - **A4:** \<WRITE YOUR ANSWER HERE\> 
+ - **A4:** When two ASes are directly connected, the router automatically uses the IP of the outgoing interface as the source. This allows communication without specifying the source IP, as the destination is reachable via the local link without BGP.
  - **T1:** Implement all BGP routing policies as route-maps in the shared ruleset.conf file. 
  - **T2:** For each AS, apply the appropriate route-maps (in- and outbound) to each of their neighbors by modifying their respective FRR config files.
  - **T3:** To ensure Tier-3 ASes announce their local IP prefixes to their providers, assign them the same local preference value as routes received from customers. Implement this by applying the customer route-map for inbound routes to the IP prefixes directly.
