@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ip address add 10.0.14.1/24 dev eth0
+ip address add 10.0.12.1/24 dev eth1
+ip address add 10.0.13.1/24 dev eth2
+
+## TODO-01: start the SCION services
+# core component managing the underlay (legacy)
+
+# one for connecting SCION ASes
+
+# one for performing beaconing
+
+# one to have end-host functionality

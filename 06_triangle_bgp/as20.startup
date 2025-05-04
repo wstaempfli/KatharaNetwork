@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ip address add 10.0.12.2/24 dev eth0	# to AS10
+ip address add 10.0.23.2/24 dev eth1	# to AS30
+ip address add 10.0.102.1/24 dev eth2	# our AS
+
+systemctl start frr
+
+sleep 5 && vtysh -c "show ip bgp"

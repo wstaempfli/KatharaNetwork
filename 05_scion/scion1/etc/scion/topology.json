@@ -1,0 +1,53 @@
+{
+  "attributes": [
+    "core"
+  ],
+  "isd_as": "42-ffaa:1:1",
+  "mtu": 1472,
+  "test_dispatcher": true,
+  "dispatched_ports": "31000-32767",
+  "control_service": {
+    "cs42-ffaa_1_1-1": {
+      "addr": "127.0.0.1:31001"
+    }
+  },
+  "discovery_service": {
+    "cs42-ffaa_1_1-1": {
+      "addr": "127.0.0.1:31001"
+    }
+  },
+  "border_routers": {
+    "br42-ffaa_1_1-1": {
+      "internal_addr": "127.0.0.1:31002",
+      "interfaces": {
+        "1": {
+          "underlay": {
+            "local": "<TODO>",
+            "remote": "<TODO>"
+          },
+          "isd_as": "<TODO>",
+          "link_to": "<TODO>",
+          "mtu": 1472
+        },
+        "2": {
+          "underlay": {
+            "local": "<TODO>",
+            "remote": "<TODO>"
+          },
+          "isd_as": "<TODO>",
+          "link_to": "<TODO>",
+          "mtu": 1472
+        },
+        "3": {
+          "underlay": {
+            "local": "<TODO>",
+            "remote": "<TODO>"
+          },
+          "isd_as": "<TODO>",
+          "link_to": "<TODO>",
+          "mtu": 1472
+        }
+      }
+    }
+  }
+}

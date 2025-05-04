@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ip address add 10.0.12.1/24 dev eth0	# to AS20
+ip address add 10.0.13.1/24 dev eth1	# to AS30
+ip address add 10.0.101.1/24 dev eth2	# our AS
+
+####### DO NOT TOUCH THE FOLLOWING LINE #######
+tc qdisc add dev eth1 root netem delay 50ms 5ms
+
+systemctl start frr
+
+sleep 5 && vtysh -c "show ip bgp"

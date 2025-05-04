@@ -1,0 +1,3 @@
+# FRR daemons file - Enables bgpd
+zebra=yes
+bgpd=yes
