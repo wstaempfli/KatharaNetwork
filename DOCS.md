@@ -440,8 +440,39 @@ The SCION Daemon (`scion-daemon.service`) communicates with the control plane. I
 ### Dispatcher Service
 In earlier SCION versions, the Dispatcher (`scion-dispatcher.service`) managed a single network socket for incoming traffic and distributed packets to the appropriate applications. In newer versions of SCION (as used in our labs), each application can open its own socket directly, thus improving performance and eliminating the need for a dispatcher. To remain backwards compatible, modern SCION versions still include a so-called dispatcher shim.
 
-### IP Gateway Service
-The SCION IP Gateway (SIG, `scion-ip-gateway.service`) enables tunneling of IP packets over SCION, enabling non-SCION hosts to communicate via the SCION network. It encapsulates IP packets within SCION packets and perfoms path lookups to select a path between the ingress and egress gateways. More details on the SIG can be found in the following section.
+### SCION IP Gateway Service
+The SCION IP Gateway (SIG, `scion-ip-gateway.service`) enables non-SCION hosts to communicate via the SCION network by tunneling IP packets over SCION. It encapsulates IP packets within SCION packets and performs path lookups to select a suitable SCION path to the receiving AS. The SIG acts as a router from the perspective of the non-SCION host, whilst acting as SCION endpoint from the perspective of the SCION network. It is typically deployed inside the same AS-internal network as its non-SCION hosts, or at the edge of an enterprise network.
+
+#### Step-by-Step Operation
+Tunneling IP traffic over SCION requires a SIG at the sending and receiving AS, and involves the following steps:
+1. The sending host uses its standard name resolution protocol (e.g., DNS) to retrieve the destination's IP address, and sends IP packets toward that destination IP as usual.
+2. The IP packet reaches an ingress SIG in the sender’s AS.
+3. Based on the destination IP address, the ingress SIG determines the SCION address (ISD-AS-endpoint address) of an egress SIG in the destination AS. To identify the egress SIG's SCION address, each SIG store a pre-configured list of partner ASes (stored in `gateway.json`), among which a SIG discovery process is performed periodically.
+4. The ingress SIG encapsulates the original IP packet within one or more SCION packets and sends them to the egress SIG. In this step, a SCION path lookup may happen if no appropriate path is cached.
+5. The packet is forwarded along the SCION path to the egress SIG.
+6. The egress SIG receives and decapsulates the SCION packet(s) and forwards the original IP packet to its final destination host using standard IP routing.
+
+
+#### SIG Traffic Rules
+Each SIG requires traffic rules specified in a JSON configuration file. This configuration defines the IP prefixes to be forwarded to SIGs in remote ASes. 
+
+A skeleton traffic rule configuration is installed with the `scion-sig` package at /etc/scion/gateway.json. This file contains a single dummy entry with placeholders. The following example illustrates how remote SIGs can be specified, in practice you need to replace `<remote_sig_AS>` with an AS ID (e.g., `1-ffaa:1:abc`) and `<remote_sig_IPnet>` with an IP network in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
+
+```json
+{
+    "ASes": {
+        "<remote_sig_AS>": {
+            "Nets": [
+                "<remote_sig_IPnet>"
+            ]
+        }
+    },
+    "ConfigVersion": 9001
+}
+```
+
+
+
 
 ## Configuration
 
@@ -490,35 +521,3 @@ scion ping             | Test connectivity to a remote SCION host using SCMP ech
 scion showpaths        | List available paths between the local AS and a specified SCION AS.
 scion traceroute       | Trace the SCION route to a remote SCION AS using SCMP traceroute.
 scion version          | Display SCION version information.
-
-
-The SCION IP Gateway acts as a router from the perspective of IP, whilst acting as SCION endpoint from the perspective of the SCION network. It is typically deployed inside the same AS-internal network as its non-SCION hosts, or at the edge of an enterprise network.
-
-Tunneling IP traffic over SCION requires a pair of SIGs and involves the following steps:
-1. A sender sends an IP packet toward its destination via standard IP routing.
-2. The IP packet reaches an ingress SIG in the sender’s network.
-3. Based on the destination IP address, the source (ingress) SIG determines the destination (egress) SIG’s ISD-AS endpoint address. To achieve this, SIGs are administratively configured with a set of partner ASes and discover SIGs present at these ASes. They then exchange IP prefixes.
-4. The ingress SIG encapsulates the original IP packet within one or more SCION packets and sends them to the egress SIG. If needed, it performs a SCION path lookup and selects an appropriate one.
-5. The egress SIG receives and decapsulates the SCION packet(s) and forwards the original IP packet to its final destination via standard IP routing.
-
-The `scion-ip-gateway.service` systemd unit refers to the traffic policy file `/etc/scion/gateway.json`. The default traffic policy file is incomplete and must be edited before starting the service.
-
-## SIG Traffic Rules
-
-Each SIG requires traffic rules specified in a JSON configuration file. This configuration defines the IP prefixes to be forwarded to SIGs in remote ASes. 
-
-A skeleton traffic rule configuration is installed with the `scion-sig` package at /etc/scion/gateway.json. This file contains one dummy entry with placeholders. Replace `<remote_sig_AS>` with an AS ID (e.g., `1-ffaa:1:abc`) and `<remote_sig_IPnet>` with an IP network in CIDR notation. Multiple remote SIG endpoints can be specified; this example includes just one.
-
-```json
-{
-    "ASes": {
-        "<remote_sig_AS>": {
-            "Nets": [
-                "<remote_sig_IPnet>"
-            ]
-        }
-    },
-    "ConfigVersion": 9001
-}
-```
-
