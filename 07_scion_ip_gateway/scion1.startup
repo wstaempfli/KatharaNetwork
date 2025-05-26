@@ -9,5 +9,5 @@ systemctl start scion-router.service
 systemctl start scion-control.service
 systemctl start scion-daemon.service
 ## TODO-01: Start SCION IP Gateway
-
+systemctl start scion-ip-gateway.service
 systemctl status scion-*.service
