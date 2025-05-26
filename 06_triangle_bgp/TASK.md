@@ -52,9 +52,9 @@ You have to perform traffic engineering such that neither traffic from AS10 to A
 
  - **T1:** Implement *egress TE* using FRR route-maps.
  - **Q1:** What BGP path attribute did you use for *egress TE*?
- - **A1:** The provided ffr doc specified that weight check has the highest precendence thus I changed the weights using route-map whenever a BGP update came in via the link from AS20, increasing it to 400 and when a BGP update came in via the bad link i decreased the weight to 0 
+ - **A1:** I changed the local pref of all all outgoing routes via router 10.0.13.1 to 0 meaning routes via 10.0.12.1 are being prefered
  - **T2:** Implement *ingress TE* using FRR route-maps.
  - **Q2:** What BGP path attribute did you use for *ingress TE*?
- - **A2:** \<WRITE YOUR ANSWER HERE\>
- - **Q3:** It can take some time for an AS to realize a link is show and change its routing accordingly. Is there a way for hosts to influence this routing decision or even route around any bad link proactively?
- - **A3:** \<WRITE YOUR ANSWER HERE\>
+ - **A2:** I modifed the AS path length by adding AS10 3 times (instead of 1) making it appear worse than via AS20, whenever a BGP-update is sent out via the bad link
+ - **Q3:** It can take some time for an AS to realize a link is slow and change its routing accordingly. Is there a way for hosts to influence this routing decision or even route around any bad link proactively?
+ - **A3:** In today’s BGP-only Internet a host has no direct lever to change an inter-AS route: once a packet enters the first router, all forwarding choices are made hop-by-hop according to each AS’s BGP tables, which converge only after tens of seconds (or minutes) of path exploration and dampening.
