@@ -52,7 +52,7 @@ You have to perform traffic engineering such that neither traffic from AS10 to A
 
  - **T1:** Implement *egress TE* using FRR route-maps.
  - **Q1:** What BGP path attribute did you use for *egress TE*?
- - **A1:** The provided ffr doc specified that weight check has the highest precendence thus I changed the weights such that the neighbour 10.0.12.2 has higher weight than (bad link) neighbour 10.0.13.3
+ - **A1:** The provided ffr doc specified that weight check has the highest precendence thus I changed the weights using route-map whenever a BGP update came in via the link from AS20, increasing it to 400 and when a BGP update came in via the bad link i decreased the weight to 0 
  - **T2:** Implement *ingress TE* using FRR route-maps.
  - **Q2:** What BGP path attribute did you use for *ingress TE*?
  - **A2:** \<WRITE YOUR ANSWER HERE\>
