@@ -6,9 +6,12 @@ ip address add 10.0.13.1/24 dev eth2
 
 ## TODO-01: start the SCION services
 # core component managing the underlay (legacy)
-
+systemctl start scion-dispatcher.service
 # one for connecting SCION ASes
-
+systemctl start scion-router.service
 # one for performing beaconing
-
+systemctl start scion-control.service
 # one to have end-host functionality
+systemctl start scion-daemon.service
+
+systemctl status scion-*.service

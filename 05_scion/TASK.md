@@ -9,13 +9,19 @@ In this lab, as with the previous BGP lab, the entire AS (including all SCION se
  - **T1:** Firstly, launch all the SCION services on scion1 as described in the startup file. Some services might still crash, due to the invald topology.json.
  - **T2:** Edit the topology.json file to complete the Border Router section. Fill in all the missing link information according to the diagram provided.
  - **Q1:** Explore the available SCION commands. For example, if you are on scion1, try to perform `scion showpaths` to scion3 - what paths are available to you?
- - **A1:** \<WRITE YOUR ANSWER HERE\>
+  
+ - **A1:** Available paths to 42-ffaa:1:3
+2 Hops:
+[0] Hops: [42-ffaa:1:1 3>1 42-ffaa:1:3] MTU: 1472 NextHop: 127.0.0.1:31002 Status: alive LocalIP: 127.0.0.1
+3 Hops:
+[1] Hops: [42-ffaa:1:1 2>1 42-ffaa:1:2 2>2 42-ffaa:1:3] MTU: 1472 NextHop: 127.0.0.1:31002 Status: alive LocalIP: 127.0.0.1
+
  - **Q2:** Is scion4 included in any of these paths? Explain why or why not.
- - **A2:** \<WRITE YOUR ANSWER HERE\>
+ - **A2:** no it's not included. The Segment-ordering rule allows an end-to-end path to contain at most one up , one core and one down segment (in that order). Thus the path via scion4 is not valid since it starts with a down followed by a core segment.
  - **Q3:** Next, attempt to `scion ping` scion5 from scion1. What is the main difference with this command, compared to `scion showpaths`?
- - **A3:** \<WRITE YOUR ANSWER HERE\>
+ - **A3:** scion showpaths simply lists all available paths scion allows, without acutally sending any packets. => this is executed solely via the control plane, whereas the scion ping command actually sends SCMP echo packets and tests connectivity, therefore testing paths via the data plane.
  - **Q4:** Why can't you use the normal Linux ping command to reach scion5 from scion1? It might help to look at the standard Linux routing table.
- - **A4:** \<WRITE YOUR ANSWER HERE\>
+ - **A4:** because when we ping an address using "scion ping" we also provide information about the ISD and the AS, i.e we create a SCION packet in contrast to "ping" that builds a plain IP packet with an ICMP-Echo payload.
 
 **Hint**
 While this is not required and may be freely configured within the SCION topology, we ensure consistency between the hardware and SCION interface numbers. Meaning `eth0` is interface 1, `eth1` is interface 2 etc.
