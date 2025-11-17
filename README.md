@@ -9,7 +9,6 @@ This is the first year that we have this project - we hope you enjoy exploring t
  - The project is released in two parts with two respective deadlines. For more details, please check the course website.
  - This project should be **completed independently**. While discussing the network protocols and technologies with peers is permitted, any discussions involving concrete configurations or code sharing are not allowed.
  - Copying, even partial code, from publicly available repositories is strictly prohibited.
- - We kindly ask you to not upload your solution to publicly available GitHub repositories even after the deadline, since this project will likely be reused for future iterations of the course.
  - The provided autograder automatically tests your solutions when you push to your repository. These test results are for your reference only; your final grade will be determined through a separate offline run.
  - Please only push your solutions when you actually want them to be tested. 
 
